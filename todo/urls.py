@@ -4,6 +4,5 @@ from todo import views
 
 urlpatterns = [
     path('',views.ToDoView.as_view(), name="todo_view"),
-    path('<int:todo_id>/', views.ToDoDetailView.as_view(),name="todo_detail_view"),
 
 ]

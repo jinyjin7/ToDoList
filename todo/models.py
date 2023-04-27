@@ -4,9 +4,9 @@ from users.models import User
 # Create your models here.
 
 class ToDoList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    is_complete = models.BooleanField(default = False)
+    is_complete = models.BooleanField(default = True)
     creat_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     comletion_at = models.DateTimeField(auto_now=True)
