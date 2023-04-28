@@ -7,6 +7,8 @@ from users.serializers import UserSerializer,CustomTokenObtainPairSerializer,Use
 from rest_framework_simplejwt.views import (
     TokenObtainPairView)
 from users.models import User
+from django.contrib import auth 
+
 
 
 # Create your views here.
@@ -20,13 +22,18 @@ class UserView(APIView):
         else:
             return Response({"massage":f"${serializer.errors}"},status=status.HTTP_400_BAD_REQUEST)
 
+
+
 #유저프로필
 class ProfileView(APIView):
     #프로필 보기
     def get(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
-        serializer = UserProrileSerializer(user)
-        return Response(serializer.data) 
+        if request.user == user:
+            serializer = UserProrileSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({"권한이 없습니다!"},status=status.HTTP_400_BAD_REQUEST)
     
     #프로필 수정 (2차)
     def put(self, request, user_id):
@@ -38,6 +45,8 @@ class ProfileView(APIView):
                 return Response(serializer.data,status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"권한이 없습니다!"},status=status.HTTP_400_BAD_REQUEST)
             
     #회원탈퇴
     def delete(self, request, user_id):
@@ -48,15 +57,6 @@ class ProfileView(APIView):
             return Response({"회원탈퇴 완료!"},status=status.HTTP_204_NO_CONTENT)
         else:
             return Response({"권한이 없습니다"},status=status.HTTP_403)
-
-#회원 로그아웃->로그인이안됨,,
-class LogoutView(APIView):
-    def post(self, request,user_id):
-        user = get_object_or_404(User, id=user_id)
-        response = Response({"로그아웃 성공!"}, status=status.HTTP_202_ACCEPTED)
-        response.delete_cookie('refreshtoken')
-
-        return response
 
 
 

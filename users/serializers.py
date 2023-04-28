@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from users.models import User
+from django.contrib import auth 
 
 
 
@@ -31,6 +32,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+    
+    
+
 
 #jwt토큰 커스텀
 # email, name, gender, age
