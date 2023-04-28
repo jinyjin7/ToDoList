@@ -35,7 +35,7 @@ class UserProrileCorrectionSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ("name","email","password","gender","age","bio")
 
     def create(self, validated_data):
         user = super().create(validated_data)
@@ -44,8 +44,8 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
     
-    def update(self,validated_data):
-        user = super().create(validated_data)
+    def update(self,instance, validated_data):
+        user = super().update(instance, validated_data)
         password = user.password
         user.set_password(password)
         user.save()
