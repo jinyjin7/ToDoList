@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework import permissions
 from rest_framework.response import Response
-from users.serializers import UserSerializer,CustomTokenObtainPairSerializer,UserProrileSerializer,UserProrileCorrectionSerializer
+from users.serializers import UserSerializer,CustomTokenObtainPairSerializer,UserProrileSerializer
 from rest_framework_simplejwt.views import (
     TokenObtainPairView)
 from users.models import User
